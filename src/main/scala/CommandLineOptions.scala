@@ -62,7 +62,7 @@ trait CommandLineOptions {
   /** Returns the usage text of the application. */
   def usage: String =
     """|Usage:
-       |  %s
-    """ format (name) stripMargin
+       |  %s [OPTION...] - %s
+    """ format (name, description) stripMargin
 
 }
