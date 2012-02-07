@@ -10,6 +10,7 @@ class CommandLineOptionSpec extends Specification { def is =
 
   "The Command Line Option Trait"                                             ^
     "should be mixed in with the 'App' trait" ! e1                            ^
+    "should have access to 'args'"            ! e2                            ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -17,10 +18,19 @@ class CommandLineOptionSpec extends Specification { def is =
 
   def e1 = app must beAnInstanceOf[App with CommandLineOptions]
 
+  def e2 = {
+    val args = Array("foo","bar","baz")
+    val a = app
+    a.main(args)
+    a.arguments === args
+  }
+
   // -----------------------------------------------------------------------
   // utility functions
   // -----------------------------------------------------------------------
 
-  def app = new App with CommandLineOptions
+  def app = new App with CommandLineOptions {
+    def arguments = args
+  }
 
 }
