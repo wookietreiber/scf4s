@@ -60,6 +60,9 @@ trait CommandLineOptions {
   def description: String
 
   /** Returns the usage text of the application. */
-  protected[scf4s] def usage: String = """Usage:"""
+  def usage: String =
+    """|Usage:
+       |  %s
+    """ format (name) stripMargin
 
 }
