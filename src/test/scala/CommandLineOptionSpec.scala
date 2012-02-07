@@ -13,6 +13,7 @@ class CommandLineOptionSpec extends Specification { def is =
     "have access to 'args'"                 ! e2                              ^
     "provide a 'name' for the 'App'"        ! e3                              ^
     "provide a 'description' for the 'App'" ! e4                              ^
+    "provide a 'usage' text"                ! e5                              ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -30,6 +31,8 @@ class CommandLineOptionSpec extends Specification { def is =
   def e3 = app.name must beAnInstanceOf[String]
 
   def e4 = app.description must beAnInstanceOf[String]
+
+  def e5 = app.usage must startWith("Usage:")
 
   // -----------------------------------------------------------------------
   // utility functions

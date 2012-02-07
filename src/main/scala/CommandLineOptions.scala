@@ -59,4 +59,7 @@ trait CommandLineOptions {
   /** Returns the description of the application. */
   def description: String
 
+  /** Returns the usage text of the application. */
+  protected[scf4s] def usage: String = """Usage:"""
+
 }
