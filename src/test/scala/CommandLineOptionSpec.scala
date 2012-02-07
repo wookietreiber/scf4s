@@ -16,6 +16,9 @@ class CommandLineOptionSpec extends Specification { def is =
     "provide a 'usage' text"                ! e5                            ^t^
       "that contains 'name'"                ! e6                              ^
       "that contains 'description'"         ! e7                              ^
+                                                                         endbr^
+  "A 'CommandLineOption' should"                                              ^
+    "have a 'name'"                         ! f1                              ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -34,6 +37,8 @@ class CommandLineOptionSpec extends Specification { def is =
   def e6 = app.usage must contain(app.name)
   def e7 = app.usage must contain(app.description)
 
+  def f1 = opt.name must beAnInstanceOf[String]
+
   // -----------------------------------------------------------------------
   // utility functions
   // -----------------------------------------------------------------------
@@ -43,5 +48,7 @@ class CommandLineOptionSpec extends Specification { def is =
     override def name = "MyApp"
     override def description = "do awesome stuff"
   }
+
+  def opt = CommandLineOption("foo")
 
 }
