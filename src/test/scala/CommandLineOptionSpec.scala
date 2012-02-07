@@ -18,7 +18,8 @@ class CommandLineOptionSpec extends Specification { def is =
       "that contains 'description'"         ! e7                              ^
                                                                          endbr^
   "A 'CommandLineOption' should"                                              ^
-    "have a 'name'"                         ! f1                              ^
+    "have a 'name'"                         ! f1                            ^t^
+      "that is non-empty"                   ! f2                              ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -38,6 +39,9 @@ class CommandLineOptionSpec extends Specification { def is =
   def e7 = app.usage must contain(app.description)
 
   def f1 = opt.name must beAnInstanceOf[String]
+  def f2 = CommandLineOption("") must throwA[IllegalArgumentException](
+    message = "The 'name' must not be empty."
+  )
 
   // -----------------------------------------------------------------------
   // utility functions

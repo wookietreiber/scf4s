@@ -41,4 +41,6 @@
 
 package scalax.scf4s
 
-case class CommandLineOption(name: String)
+case class CommandLineOption(name: String) {
+  require(name nonEmpty, "The 'name' must not be empty.")
+}
