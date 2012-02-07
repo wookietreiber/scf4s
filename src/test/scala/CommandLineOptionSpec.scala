@@ -20,6 +20,7 @@ class CommandLineOptionSpec extends Specification { def is =
   "A 'CommandLineOption' should"                                              ^
     "have a 'name'"                         ! f1                            ^t^
       "that is non-empty"                   ! f2                              ^
+      "that does not start with '-'"        ! f3                              ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -41,6 +42,9 @@ class CommandLineOptionSpec extends Specification { def is =
   def f1 = opt.name must beAnInstanceOf[String]
   def f2 = CommandLineOption("") must throwA[IllegalArgumentException](
     message = "The 'name' must not be empty."
+  )
+  def f3 = CommandLineOption("-foo") must throwA[IllegalArgumentException](
+    message = "The 'name' must not start with '-'."
   )
 
   // -----------------------------------------------------------------------

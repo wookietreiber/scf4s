@@ -41,6 +41,12 @@
 
 package scalax.scf4s
 
+/** Represents a command line option.
+  *
+  * @param name Returns the name that is used in long arguments, as in `--name`.
+  *             It may neither be empty nor start with '-'.
+  */
 case class CommandLineOption(name: String) {
   require(name nonEmpty, "The 'name' must not be empty.")
+  require(!name.startsWith("-"), "The 'name' must not start with '-'.")
 }
