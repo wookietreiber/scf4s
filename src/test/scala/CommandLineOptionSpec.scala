@@ -21,20 +21,15 @@ class CommandLineOptionSpec extends Specification { def is =
   // -----------------------------------------------------------------------
 
   def e1 = app must beAnInstanceOf[App with CommandLineOptions]
-
   def e2 = {
     val args = Array("foo","bar","baz")
     val a = app
     a.main(args)
     a.arguments === args
   }
-
   def e3 = app.name must beAnInstanceOf[String]
-
   def e4 = app.description must beAnInstanceOf[String]
-
   def e5 = app.usage must startWith("Usage:")
-
   def e6 = app.usage must contain(app.name)
 
   // -----------------------------------------------------------------------
