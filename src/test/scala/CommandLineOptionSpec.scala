@@ -9,18 +9,18 @@ class CommandLineOptionSpec extends Specification { def is =
   // -----------------------------------------------------------------------
 
   "The 'CommandLineOptions' trait should"                                     ^
-    "be mixed in with the 'App' trait"      ! e1                              ^
-    "have access to 'args'"                 ! e2                              ^
-    "provide a 'name' for the 'App'"        ! e3                              ^
-    "provide a 'description' for the 'App'" ! e4                              ^
-    "provide a 'usage' text"                ! e5                            ^t^
-      "that contains 'name'"                ! e6                              ^
-      "that contains 'description'"         ! e7                              ^
+    "be mixed in with the 'App' trait"                            ! e1        ^
+    "have access to 'args'"                                       ! e2        ^
+    "provide a 'name' for the 'App'"                              ! e3        ^
+    "provide a 'description' for the 'App'"                       ! e4        ^
+    "provide a 'usage' text"                                      ! e5      ^t^
+      "that contains 'name'"                                      ! e6        ^
+      "that contains 'description'"                               ! e7        ^
                                                                          endbr^
   "A 'CommandLineOption' should"                                              ^
-    "have a 'name'"                         ! f1                            ^t^
-      "that is non-empty"                   ! f2                              ^
-      "that does not start with '-'"        ! f3                              ^
+    "have a 'name'"                                               ! f1      ^t^
+      "that matches [a-z]{2,}(?:-[a-z]{2,})*"                     ! f2        ^
+      "that failes some counter examples"                         ! f3        ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -40,12 +40,12 @@ class CommandLineOptionSpec extends Specification { def is =
   def e7 = app.usage must contain(app.description)
 
   def f1 = opt.name must beAnInstanceOf[String]
-  def f2 = CommandLineOption("") must throwA[IllegalArgumentException](
-    message = "The 'name' must not be empty."
-  )
-  def f3 = CommandLineOption("-foo") must throwA[IllegalArgumentException](
-    message = "The 'name' must not start with '-'."
-  )
+  def f2 = foreach(Seq("foo","foo-bar","foo-bar-baz")) { name =>
+    CommandLineOption(name) must not(throwAn[IllegalArgumentException])
+  }
+  def f3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
+    CommandLineOption(name) must throwAn[IllegalArgumentException]
+  }
 
   // -----------------------------------------------------------------------
   // utility functions
