@@ -13,6 +13,7 @@ object BuildSettings {
     organization         := buildOrganization,
     version              := buildVersion,
     scalaVersion         := buildScalaVersion,
+    initialCommands      := """import scalax.scf4s._""",
     libraryDependencies ++= Seq ( specs2 )
   )
 }
