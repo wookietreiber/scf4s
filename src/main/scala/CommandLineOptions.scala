@@ -41,6 +41,13 @@
 
 package scalax.scf4s
 
+/** Provides convenient ''command line option'' parsing for applications.
+  *
+  * {{{
+  * object MyApp extends App with CommandLineOptions {
+  * }
+  * }}}
+  */
 trait CommandLineOptions {
   self: App =>
 }
