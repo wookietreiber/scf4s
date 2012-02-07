@@ -46,6 +46,7 @@ package scalax.scf4s
   * {{{
   * object MyApp extends App with CommandLineOptions {
   *   override def name = "MyApp"
+  *   override def description = "do awesome stuff"
   * }
   * }}}
   */
@@ -54,5 +55,8 @@ trait CommandLineOptions {
 
   /** Returns the name of the application. */
   def name: String
+
+  /** Returns the description of the application. */
+  def description: String
 
 }

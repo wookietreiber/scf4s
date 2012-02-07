@@ -9,9 +9,10 @@ class CommandLineOptionSpec extends Specification { def is =
   // -----------------------------------------------------------------------
 
   "The Command Line Option Trait"                                             ^
-    "should be mixed in with the 'App' trait" ! e1                            ^
-    "should have access to 'args'"            ! e2                            ^
-    "should provide a 'name' for the 'App'"   ! e3                            ^
+    "should be mixed in with the 'App' trait"      ! e1                       ^
+    "should have access to 'args'"                 ! e2                       ^
+    "should provide a 'name' for the 'App'"        ! e3                       ^
+    "should provide a 'description' for the 'App'" ! e4                       ^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -28,6 +29,8 @@ class CommandLineOptionSpec extends Specification { def is =
 
   def e3 = app.name must beAnInstanceOf[String]
 
+  def e4 = app.description must beAnInstanceOf[String]
+
   // -----------------------------------------------------------------------
   // utility functions
   // -----------------------------------------------------------------------
@@ -35,6 +38,7 @@ class CommandLineOptionSpec extends Specification { def is =
   def app = new App with CommandLineOptions {
     def arguments = args
     override def name = "MyApp"
+    override def description = "do awesome stuff"
   }
 
 }
