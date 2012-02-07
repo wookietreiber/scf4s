@@ -8,7 +8,7 @@ class CommandLineOptionSpec extends Specification { def is =
   // fragments
   // -----------------------------------------------------------------------
 
-  "The Command Line Option Trait should"                                      ^
+  "The 'CommandLineOptions' trait should"                                     ^
     "be mixed in with the 'App' trait"      ! e1                              ^
     "have access to 'args'"                 ! e2                              ^
     "provide a 'name' for the 'App'"        ! e3                              ^
