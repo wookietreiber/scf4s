@@ -49,12 +49,14 @@ import CommandLineOption._
 
 /** Represents a command line option.
   *
-  * @param name Returns the name that is used in long arguments, as in `--name`.
-  *             It must be a '-' separated sequence of lowercase words each of
-  *             at least length 2 or in other words: match the regex
-  *             `"""[a-z]{2,}(?:-[a-z]{2,})*"""`.
+  * @param name  Returns the name that is used in long arguments, as in `--name`.
+  *              It must be a '-' separated sequence of lowercase words each of
+  *              at least length 2 or in other words: match the regex
+  *              `"""[a-z]{2,}(?:-[a-z]{2,})*"""`.
+  * @param short Optionally returns the name that is used in short arguments, as
+  *              in `-n`.
   */
-case class CommandLineOption(name: String) {
+case class CommandLineOption(name: String, short: Option[Char] = None) {
   require(name match {
     case nameRegex() => true
     case _           => false
