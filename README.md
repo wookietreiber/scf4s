@@ -32,7 +32,8 @@ Full Integration with Command Line Arguments
 [SBT][3] Integration
 --------------------
 
-- install default / reference configuration file(s) (based on the used `Locator`
+- install default / reference configuration file(s) (based on the used
+  `Locator`)
 - install manpage(s)
 
 
