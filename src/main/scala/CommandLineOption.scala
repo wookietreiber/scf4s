@@ -57,7 +57,12 @@ import CommandLineOption._
   * @param short Optionally returns the name that is used in short arguments, as
   *              in `-n`.
   */
-case class CommandLineOption(name: String, short: Option[Char] = None) {
+case class CommandLineOption(
+    name: String,
+    description: String,
+    short: Option[Char] = None
+  ) {
+
   require(name match {
     case nameRegex() => true
     case _           => false
