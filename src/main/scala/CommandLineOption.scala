@@ -42,8 +42,14 @@
 package scalax.scf4s
 
 object CommandLineOption {
-  val nameRegex = """[a-z]{2,}(?:-[a-z]{2,})*""".r
-  val shortRegex = """[a-zA-Z]""".r
+  lazy val nameRegex = """[a-z]{2,}(?:-[a-z]{2,})*""".r
+  lazy val shortRegex = """[a-zA-Z]""".r
+
+  lazy val errorMessageName =
+    "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2."
+  lazy val errorMessageShort = "The 'short' name must be a letter."
+  lazy val errorMessageDescription = "The 'description' may not be empty."
+  lazy val errorMessageExample = "The 'example' may not be empty."
 }
 
 import CommandLineOption._
@@ -78,14 +84,15 @@ case class CommandLineOption (
   require(name match {
     case nameRegex() => true
     case _           => false
-  }, "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2.")
+  }, errorMessageName)
 
   require(short map { _ toString match {
     case shortRegex() => true
     case _            => false
-  }} getOrElse true, "The 'short' name must be a letter.")
+  }} getOrElse true, errorMessageShort)
 
-  require(description nonEmpty, "The 'description' may not be empty.")
+  require(description nonEmpty, errorMessageDescription)
 
-  require(example map { _ nonEmpty } getOrElse true, "The 'example' may not be empty.")
+  require(example map { _ nonEmpty } getOrElse true, errorMessageExample)
+
 }

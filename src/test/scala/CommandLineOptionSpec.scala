@@ -51,22 +51,22 @@ class CommandLineOptionSpec extends Specification { def is =
   }
   def f3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
     CommandLineOption(name,None,"desc",None) must throwAn[IllegalArgumentException] {
-      "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2."
+      CommandLineOption.errorMessageName
     }
   }
   def f4 = opt.short must beAnInstanceOf[Option[Char]]
   def f5 = foreach(Seq(' ','-','_','#')) { short =>
     CommandLineOption("name",Some(short),"desc",None) must throwAn[IllegalArgumentException] {
-      "The 'short' name must be a letter."
+      CommandLineOption.errorMessageShort
     }
   }
   def f6 = opt.description must beAnInstanceOf[String]
   def f7 = CommandLineOption("name",None,"",None) must throwAn[IllegalArgumentException] {
-    "The 'description' may not be empty."
+    CommandLineOption.errorMessageDescription
   }
   def f8 = opt.example must beAnInstanceOf[Option[String]]
   def f9 = CommandLineOption("name",None,"desc",Some("")) must throwAn[IllegalArgumentException] {
-    "The 'example' may not be empty."
+    CommandLineOption.errorMessageExample
   }
 
   // -----------------------------------------------------------------------
