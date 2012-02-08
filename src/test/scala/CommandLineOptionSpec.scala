@@ -24,6 +24,7 @@ class CommandLineOptionSpec extends Specification { def is =
     "have an optional 'short' name"                               ! f4      ^t^
       "that matches [a-zA-Z] and nothing else"                    ! f5     ^bt^
     "have a 'description'"                                        ! f6      ^t^
+      "that is non-empty"                                         ! f7     ^bt^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -44,16 +45,23 @@ class CommandLineOptionSpec extends Specification { def is =
 
   def f1 = opt.name must beAnInstanceOf[String]
   def f2 = foreach(Seq("foo","foo-bar","foo-bar-baz")) { name =>
-    CommandLineOption(name,"") must not(throwAn[IllegalArgumentException])
+    CommandLineOption(name,"foo") must not(throwAn[IllegalArgumentException])
   }
   def f3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
-    CommandLineOption(name,"") must throwAn[IllegalArgumentException]
+    CommandLineOption(name,"foo") must throwAn[IllegalArgumentException] {
+      "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2."
+    }
   }
   def f4 = opt.short must beAnInstanceOf[Option[Char]]
   def f5 = foreach(Seq(' ','-','_','#')) { short =>
-    CommandLineOption("foo","",Some(short)) must throwAn[IllegalArgumentException]
+    CommandLineOption("foo","foo",Some(short)) must throwAn[IllegalArgumentException] {
+      "The 'short' name must be a letter."
+    }
   }
   def f6 = opt.description must beAnInstanceOf[String]
+  def f7 = CommandLineOption("foo","") must throwAn[IllegalArgumentException] {
+    "The 'description' may not be empty."
+  }
 
   // -----------------------------------------------------------------------
   // utility functions

@@ -50,10 +50,14 @@ import CommandLineOption._
 
 /** Represents a command line option.
   *
-  * @param name  Returns the name that is used in long arguments, as in `--name`.
-  *              It must be a '-' separated sequence of lowercase words each of
-  *              at least length 2 or in other words: match the regex
-  *              `"""[a-z]{2,}(?:-[a-z]{2,})*"""`.
+  * @param name Returns the name that is used in long arguments, as in `--name`.
+  *             It must be a '-' separated sequence of lowercase words each of
+  *             at least length 2 or in other words: match the regex
+  *             `"""[a-z]{2,}(?:-[a-z]{2,})*"""`.
+  *
+  * @param description Returns the description of this option. It should explain
+  *                    what this option does.
+  *
   * @param short Optionally returns the name that is used in short arguments, as
   *              in `-n`.
   */
@@ -68,8 +72,10 @@ case class CommandLineOption(
     case _           => false
   }, "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2.")
 
+  require(description nonEmpty, "The 'description' may not be empty.")
+
   require(short map { _ toString match {
     case shortRegex() => true
     case _            => false
-  }} getOrElse true)
+  }} getOrElse true, "The 'short' name must be a letter.")
 }
