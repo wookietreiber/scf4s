@@ -80,10 +80,12 @@ case class CommandLineOption (
     case _           => false
   }, "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2.")
 
-  require(description nonEmpty, "The 'description' may not be empty.")
-
   require(short map { _ toString match {
     case shortRegex() => true
     case _            => false
   }} getOrElse true, "The 'short' name must be a letter.")
+
+  require(description nonEmpty, "The 'description' may not be empty.")
+
+  require(example map { _ nonEmpty } getOrElse true, "The 'example' may not be empty.")
 }

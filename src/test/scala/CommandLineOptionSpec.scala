@@ -26,6 +26,7 @@ class CommandLineOptionSpec extends Specification { def is =
     "have a 'description'"                                        ! f6      ^t^
       "that is non-empty"                                         ! f7     ^bt^
     "have an optional 'example'"                                  ! f8      ^t^
+      "that is non-empty"                                         ! f9     ^bt^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -64,6 +65,9 @@ class CommandLineOptionSpec extends Specification { def is =
     "The 'description' may not be empty."
   }
   def f8 = opt.example must beAnInstanceOf[Option[String]]
+  def f9 = CommandLineOption("name",None,"desc",Some("")) must throwAn[IllegalArgumentException] {
+    "The 'example' may not be empty."
+  }
 
   // -----------------------------------------------------------------------
   // utility functions
