@@ -20,8 +20,9 @@ class CommandLineOptionSpec extends Specification { def is =
   "A 'CommandLineOption' should"                                              ^
     "have a 'name'"                                               ! f1      ^t^
       "that matches [a-z]{2,}(?:-[a-z]{2,})*"                     ! f2        ^
-      "that failes some counter examples"                         ! f3        ^
+      "that failes some counter examples"                         ! f3     ^bt^
     "have an optional 'short' name"                               ! f4      ^t^
+      "that matches [a-zA-Z] and nothing else"                    ! f5     ^bt^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -48,6 +49,9 @@ class CommandLineOptionSpec extends Specification { def is =
     CommandLineOption(name) must throwAn[IllegalArgumentException]
   }
   def f4 = opt.short must beAnInstanceOf[Option[Char]]
+  def f5 = foreach(Seq(' ','-','_','#')) { short =>
+    CommandLineOption("foo",Some(short)) must throwAn[IllegalArgumentException]
+  }
 
   // -----------------------------------------------------------------------
   // utility functions

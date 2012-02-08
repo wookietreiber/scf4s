@@ -43,6 +43,7 @@ package scalax.scf4s
 
 object CommandLineOption {
   val nameRegex = """[a-z]{2,}(?:-[a-z]{2,})*""".r
+  val shortRegex = """[a-zA-Z]""".r
 }
 
 import CommandLineOption._
@@ -61,4 +62,9 @@ case class CommandLineOption(name: String, short: Option[Char] = None) {
     case nameRegex() => true
     case _           => false
   }, "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2.")
+
+  require(short map { _ toString match {
+    case shortRegex() => true
+    case _            => false
+  }} getOrElse true)
 }
