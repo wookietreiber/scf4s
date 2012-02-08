@@ -51,8 +51,8 @@ import CommandLineOption._
 /** Represents a command line option.
   *
   * {{{
-  * scala> val opt = CommandLineOption("depth", "recursion depth", Some('d'))
-  * opt: scalax.scf4s.CommandLineOption = CommandLineOption(depth,recursion depth,Some(d))
+  * scala> val opt = CommandLineOption("depth",Some('d'),"recursion depth",Some("N"))
+  * opt: scalax.scf4s.CommandLineOption = CommandLineOption(depth,Some(d),recursion depth,Some(N))
   * }}}
   *
   * @param name Returns the name that is used in long arguments, as in `--name`.
@@ -60,16 +60,19 @@ import CommandLineOption._
   *             at least length 2 or in other words: match the regex
   *             `"""[a-z]{2,}(?:-[a-z]{2,})*"""`.
   *
+  * @param short Optionally returns the name that is used in short arguments, as
+  *              in `-n`.
+  *
   * @param description Returns the description of this option. It should explain
   *                    what this option does.
   *
-  * @param short Optionally returns the name that is used in short arguments, as
-  *              in `-n`.
+  * @param example Optionally returns the example for the argument.
   */
-case class CommandLineOption(
+case class CommandLineOption (
     name: String,
+    short: Option[Char],
     description: String,
-    short: Option[Char] = None
+    example: Option[String]
   ) {
 
   require(name match {

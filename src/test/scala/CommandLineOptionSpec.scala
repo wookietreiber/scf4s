@@ -25,6 +25,7 @@ class CommandLineOptionSpec extends Specification { def is =
       "that matches [a-zA-Z] and nothing else"                    ! f5     ^bt^
     "have a 'description'"                                        ! f6      ^t^
       "that is non-empty"                                         ! f7     ^bt^
+    "have an optional 'example'"                                  ! f8      ^t^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
@@ -45,23 +46,24 @@ class CommandLineOptionSpec extends Specification { def is =
 
   def f1 = opt.name must beAnInstanceOf[String]
   def f2 = foreach(Seq("foo","foo-bar","foo-bar-baz")) { name =>
-    CommandLineOption(name,"foo") must not(throwAn[IllegalArgumentException])
+    CommandLineOption(name,None,"desc",None) must not(throwAn[IllegalArgumentException])
   }
   def f3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
-    CommandLineOption(name,"foo") must throwAn[IllegalArgumentException] {
+    CommandLineOption(name,None,"desc",None) must throwAn[IllegalArgumentException] {
       "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2."
     }
   }
   def f4 = opt.short must beAnInstanceOf[Option[Char]]
   def f5 = foreach(Seq(' ','-','_','#')) { short =>
-    CommandLineOption("foo","foo",Some(short)) must throwAn[IllegalArgumentException] {
+    CommandLineOption("name",Some(short),"desc",None) must throwAn[IllegalArgumentException] {
       "The 'short' name must be a letter."
     }
   }
   def f6 = opt.description must beAnInstanceOf[String]
-  def f7 = CommandLineOption("foo","") must throwAn[IllegalArgumentException] {
+  def f7 = CommandLineOption("name",None,"",None) must throwAn[IllegalArgumentException] {
     "The 'description' may not be empty."
   }
+  def f8 = opt.example must beAnInstanceOf[Option[String]]
 
   // -----------------------------------------------------------------------
   // utility functions
@@ -73,6 +75,6 @@ class CommandLineOptionSpec extends Specification { def is =
     override def description = "do awesome stuff"
   }
 
-  def opt = CommandLineOption("foo", "my description", Some('f'))
+  def opt = CommandLineOption("depth",Some('d'),"recursion depth",Some("N"))
 
 }
