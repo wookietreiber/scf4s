@@ -50,6 +50,11 @@ import CommandLineOption._
 
 /** Represents a command line option.
   *
+  * {{{
+  * scala> val opt = CommandLineOption("depth", "recursion depth", Some('d'))
+  * opt: scalax.scf4s.CommandLineOption = CommandLineOption(depth,recursion depth,Some(d))
+  * }}}
+  *
   * @param name Returns the name that is used in long arguments, as in `--name`.
   *             It must be a '-' separated sequence of lowercase words each of
   *             at least length 2 or in other words: match the regex
