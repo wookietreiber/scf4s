@@ -42,14 +42,17 @@
 package scalax.scf4s
 
 object CommandLineOption {
-  lazy val nameRegex = """[a-z]{2,}(?:-[a-z]{2,})*""".r
-  lazy val shortRegex = """[a-zA-Z]""".r
+  private[scf4s] lazy val nameRegex = """[a-z]{2,}(?:-[a-z]{2,})*""".r
+  private[scf4s] lazy val shortRegex = """[a-zA-Z]""".r
 
-  lazy val errorMessageName =
+  private[scf4s] lazy val errorMessageName =
     "The 'name' must be a '-' separated sequence of lowercase words each of at least length 2."
-  lazy val errorMessageShort = "The 'short' name must be a letter."
-  lazy val errorMessageDescription = "The 'description' may not be empty."
-  lazy val errorMessageExample = "The 'example' may not be empty."
+  private[scf4s] lazy val errorMessageShort =
+    "The 'short' name must be a letter."
+  private[scf4s] lazy val errorMessageDescription =
+    "The 'description' may not be empty."
+  private[scf4s] lazy val errorMessageExample =
+    "The 'example' may not be empty."
 }
 
 import CommandLineOption._
