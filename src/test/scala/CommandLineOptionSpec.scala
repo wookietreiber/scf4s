@@ -8,76 +8,48 @@ class CommandLineOptionSpec extends Specification { def is =
   // fragments
   // -----------------------------------------------------------------------
 
-  "The 'CommandLineOptions' trait should"                                     ^
-    "be mixed in with the 'App' trait"                            ! e1        ^
-    "have access to 'args'"                                       ! e2        ^
-    "provide a 'name' for the 'App'"                              ! e3        ^
-    "provide a 'description' for the 'App'"                       ! e4        ^
-    "provide a 'usage' text"                                      ! e5      ^t^
-      "that contains 'name'"                                      ! e6        ^
-      "that contains 'description'"                               ! e7        ^
-                                                                         endbr^
   "A 'CommandLineOption' should"                                              ^
-    "have a 'name'"                                               ! f1      ^t^
-      "that matches [a-z]{2,}(?:-[a-z]{2,})*"                     ! f2        ^
-      "that failes some counter examples"                         ! f3     ^bt^
-    "have an optional 'short' name"                               ! f4      ^t^
-      "that matches [a-zA-Z] and nothing else"                    ! f5     ^bt^
-    "have a 'description'"                                        ! f6      ^t^
-      "that is non-empty"                                         ! f7     ^bt^
-    "have an optional 'example'"                                  ! f8      ^t^
-      "that is non-empty"                                         ! f9     ^bt^
+    "have a 'name'"                                               ! e1      ^t^
+      "that matches [a-z]{2,}(?:-[a-z]{2,})*"                     ! e2        ^
+      "that failes some counter examples"                         ! e3     ^bt^
+    "have an optional 'short' name"                               ! e4      ^t^
+      "that matches [a-zA-Z] and nothing else"                    ! e5     ^bt^
+    "have a 'description'"                                        ! e6      ^t^
+      "that is non-empty"                                         ! e7     ^bt^
+    "have an optional 'example'"                                  ! e8      ^t^
+      "that is non-empty"                                         ! e9     ^bt^
                                                                             end
   // -----------------------------------------------------------------------
   // tests
   // -----------------------------------------------------------------------
 
-  def e1 = app must beAnInstanceOf[App with CommandLineOptions]
-  def e2 = {
-    val args = Array("foo","bar","baz")
-    val a = app
-    a.main(args)
-    a.arguments === args
-  }
-  def e3 = app.name must beAnInstanceOf[String]
-  def e4 = app.description must beAnInstanceOf[String]
-  def e5 = app.usage must startWith("Usage:")
-  def e6 = app.usage must contain(app.name)
-  def e7 = app.usage must contain(app.description)
-
-  def f1 = opt.name must beAnInstanceOf[String]
-  def f2 = foreach(Seq("foo","foo-bar","foo-bar-baz")) { name =>
+  def e1 = opt.name must beAnInstanceOf[String]
+  def e2 = foreach(Seq("foo","foo-bar","foo-bar-baz")) { name =>
     CommandLineOption(name,None,"desc",None) must not(throwAn[IllegalArgumentException])
   }
-  def f3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
+  def e3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
     CommandLineOption(name,None,"desc",None) must throwAn[IllegalArgumentException] {
       CommandLineOption.errorMessageName
     }
   }
-  def f4 = opt.short must beAnInstanceOf[Option[Char]]
-  def f5 = foreach(Seq(' ','-','_','#')) { short =>
+  def e4 = opt.short must beAnInstanceOf[Option[Char]]
+  def e5 = foreach(Seq(' ','-','_','#')) { short =>
     CommandLineOption("name",Some(short),"desc",None) must throwAn[IllegalArgumentException] {
       CommandLineOption.errorMessageShort
     }
   }
-  def f6 = opt.description must beAnInstanceOf[String]
-  def f7 = CommandLineOption("name",None,"",None) must throwAn[IllegalArgumentException] {
+  def e6 = opt.description must beAnInstanceOf[String]
+  def e7 = CommandLineOption("name",None,"",None) must throwAn[IllegalArgumentException] {
     CommandLineOption.errorMessageDescription
   }
-  def f8 = opt.example must beAnInstanceOf[Option[String]]
-  def f9 = CommandLineOption("name",None,"desc",Some("")) must throwAn[IllegalArgumentException] {
+  def e8 = opt.example must beAnInstanceOf[Option[String]]
+  def e9 = CommandLineOption("name",None,"desc",Some("")) must throwAn[IllegalArgumentException] {
     CommandLineOption.errorMessageExample
   }
 
   // -----------------------------------------------------------------------
   // utility functions
   // -----------------------------------------------------------------------
-
-  def app = new App with CommandLineOptions {
-    def arguments = args
-    override def name = "MyApp"
-    override def description = "do awesome stuff"
-  }
 
   def opt = CommandLineOption("depth",Some('d'),"recursion depth",Some("N"))
 
