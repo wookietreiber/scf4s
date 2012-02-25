@@ -7,6 +7,7 @@ This project is supposed to be to configuration what [slf4s][1] is to logging.
 Styles
 ------
 
+- [HOCON (Human-Optimized Config Object Notation)][9]
 - simple key-value pairs aka [INI][4] with sections
 - [JSON][5]
 - [XML][6]
@@ -45,4 +46,5 @@ Full Integration with Command Line Arguments
 [6]: http://en.wikipedia.org/wiki/XML
 [7]: http://en.wikipedia.org/wiki/YAML
 [8]: http://en.wikipedia.org/wiki/Simple_Declarative_Language
+[9]: https://github.com/typesafehub/config/blob/master/HOCON.md
 
