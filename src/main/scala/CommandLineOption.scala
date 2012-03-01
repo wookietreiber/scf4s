@@ -79,9 +79,9 @@ import CommandLineOption._
   */
 case class CommandLineOption (
     name: String,
-    short: Option[Char],
     description: String,
-    example: Option[String]
+    short: Option[Char] = None,
+    example: Option[String] = None
   ) {
 
   require(name match {

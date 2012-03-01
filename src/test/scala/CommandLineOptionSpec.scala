@@ -25,25 +25,25 @@ class CommandLineOptionSpec extends Specification { def is =
 
   def e1 = opt.name must beAnInstanceOf[String]
   def e2 = foreach(Seq("foo","foo-bar","foo-bar-baz")) { name =>
-    CommandLineOption(name,None,"desc",None) must not(throwAn[IllegalArgumentException])
+    CommandLineOption(name, "desc") must not(throwAn[IllegalArgumentException])
   }
   def e3 = foreach(Seq("","a","-foo","foo-","foo--bar")) { name =>
-    CommandLineOption(name,None,"desc",None) must throwAn[IllegalArgumentException] {
+    CommandLineOption(name, "desc") must throwAn[IllegalArgumentException] {
       CommandLineOption.errorMessageName
     }
   }
   def e4 = opt.short must beAnInstanceOf[Option[Char]]
   def e5 = foreach(Seq(' ','-','_','#')) { short =>
-    CommandLineOption("name",Some(short),"desc",None) must throwAn[IllegalArgumentException] {
+    CommandLineOption("name", "desc", Some(short)) must throwAn[IllegalArgumentException] {
       CommandLineOption.errorMessageShort
     }
   }
   def e6 = opt.description must beAnInstanceOf[String]
-  def e7 = CommandLineOption("name",None,"",None) must throwAn[IllegalArgumentException] {
+  def e7 = CommandLineOption("name", "") must throwAn[IllegalArgumentException] {
     CommandLineOption.errorMessageDescription
   }
   def e8 = opt.example must beAnInstanceOf[Option[String]]
-  def e9 = CommandLineOption("name",None,"desc",Some("")) must throwAn[IllegalArgumentException] {
+  def e9 = CommandLineOption("name", "desc", example = Some("")) must throwAn[IllegalArgumentException] {
     CommandLineOption.errorMessageExample
   }
 
@@ -51,6 +51,6 @@ class CommandLineOptionSpec extends Specification { def is =
   // utility functions
   // -----------------------------------------------------------------------
 
-  def opt = CommandLineOption("depth",Some('d'),"recursion depth",Some("N"))
+  def opt = CommandLineOption("depth", "recursion depth", Some('d'), Some("N"))
 
 }
